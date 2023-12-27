@@ -1,0 +1,157 @@
+#aws account
+account_id: "367397221180"
+region: us-west-2
+environment: dev
+#vpc
+project_name: "datahouse-cdk-demo"
+stage: "dev"
+
+#domain
+web_domain: "demo3.puravida.datahouse.com"
+web_admin_domain: "admin.demo3.puravida.datahouse.com"
+web_identity_domain: "identity.demo3.puravida.datahouse.com"
+api_domain: "api.demo3.puravida.datahouse.com"
+
+#tooling account
+tooling_cidr_block: "10.120.0.0/16"
+tooling_vpc_id: "vpc-04c65c7cc2fbe090c"
+tooling_aws_account_id: "894126404273"
+
+#Service
+
+max_capacity: 3
+min_capacity: 1
+
+api_service_name: "api-service"
+api_service_shortname: "api-svc"
+api_service_priority: 1
+api_container_port: 5000
+
+account_service_name: "account-service"
+account_service_shortname: "account-svc"
+account_service_priority: 2
+account_service_port: 5001
+
+email_service_name: "email-service"
+#rds
+instance_type: "db.t3.small"
+rds_certification: "rds-ca-rsa2048-g1"
+engine: "postgres"
+engine_version: "15"
+is_enabled_multiaz: False
+
+#networking
+vpc_cidr: "10.0.0.0/16"
+general_subnet: 24
+non_general_subnet: 26
+public_subnet_mask: 28
+private_subnet_mask: 24
+max_azs: 2
+nat_gateway_name: "NAT-GW"
+is_enabled_flow_log: True
+is_created_internet_gateway: True
+
+igw: "igw"
+natA: "natA"
+natB: "natB"
+number_of_nat: 2 # Choose 1 or 2 or 3
+vpc_tiers:
+  public1a:
+    - public1
+    - igw
+    - 10.0.10.0/26
+    - "us-west-2a"
+  public1b:
+    - public1
+    - igw
+    - 10.0.11.0/26
+    - "us-west-2b"
+  # public1c:
+  #   - public1
+  #   - igw
+  #   - 10.0.12.0/26
+  #   - "us-west-2c"
+  private1a:
+    - private1
+    - ""
+    - 10.0.20.0/24
+    - "us-west-2a"
+  private1b:
+    - private1
+    - ""
+    - 10.0.21.0/24
+    - "us-west-2b"
+  # private1c:
+  #   - private1
+  #   - ""
+  #   - 10.0.22.0/24
+  #   - "us-west-2c"
+  private2a:
+    - private2
+    - ""
+    - 10.0.30.0/24
+    - "us-west-2a"
+  private2b:
+    - private2
+    - ""
+    - 10.0.31.0/24
+    - "us-west-2b"
+  # private2witness:
+  #   - private2witness
+  #   - ""
+  #   - 10.0.32.0/24
+  #   - "us-west-2c"
+  tgwa:
+    - tgw
+    - ""
+    - 10.0.200.0/28
+    - "us-west-2a"
+  tgwb:
+    - tgw
+    - ""
+    - 10.0.201.0/28
+    - "us-west-2b"
+
+vpc_endpoints:
+  ssmssm:
+    service_name: ssm
+    vpc_endpoint_type: Interface
+    subnets:
+      - private2a
+      - private2b
+  s3g:
+    service_name: s3
+    vpc_endpoint_type: Gateway
+    subnets:
+      - private2a
+      - private2b
+  # ssmec2messages:
+  #   service_name: ec2messages
+  #   vpc_endpoint_type: Interface
+  #   subnets:
+  #     - private2a
+  #     - private2b
+  # ssmssmmessages:
+  #   service_name: ssmmessages
+  #   vpc_endpoint_type: Interface
+  #   subnets:
+  #     - private2a
+  #     - private2b
+  # s3interface:
+  #   service_name: ""
+  #   vpc_endpoint_type: ""
+  #   subnets: []
+  # s3gateway:
+  #   service_name: ""
+  #   vpc_endpoint_type: ""
+  #   subnets: []
+  # secretsmanager:
+  #   service_name: ""
+  #   vpc_endpoint_type: ""
+  #   subnets: []
+  # s3i:
+  #   service_name: s3
+  #   vpc_endpoint_type: Interface
+  #   subnets:
+  #     - private2a
+  #     - private2b
